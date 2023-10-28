@@ -3,7 +3,11 @@ import { useWalletsContext } from "@/context/walletsContext";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState, Fragment } from "react";
-import { decryptPrivateKey } from "@/helpers/wallet";
+import {
+  decryptPrivateKey,
+  addNewWallet,
+  importWallet,
+} from "@/helpers/wallet";
 
 const Settings = () => {
   const { state, auth } = useWalletsContext();
@@ -13,9 +17,10 @@ const Settings = () => {
   const [confirmPassword2, setConfirmPassword2] = useState("");
   const [privateKey, setPrivateKey] = useState("");
 
+  const { selectedWallet: SelectedWallet } = useWalletsContext();
   const [selectedWallet, setSelectedWallet] = useState<any | undefined>();
   useEffect(() => {
-    if (state != undefined) setSelectedWallet(state[0]);
+    if (state != undefined) setSelectedWallet(SelectedWallet);
   }, [state, auth]);
 
   return (
@@ -37,7 +42,18 @@ const Settings = () => {
               placeholder="Password"
               className="w-80 mt-5 h-10 rounded-md px-4 text-black"
             />
-            <button className="w-80 h-10 bg-blue-400 rounded-md mt-5">
+            <button
+              onClick={() => {
+                const status = addNewWallet(walletName, confirmPassword);
+
+                if (!status) {
+                  alert("Something went wrong try again");
+                  return;
+                }
+                alert("New Wallet Added");
+              }}
+              className="w-80 h-10 bg-blue-400 rounded-md mt-5"
+            >
               Create
             </button>
           </div>
@@ -135,6 +151,7 @@ const Settings = () => {
                 }
 
                 alert("Key :" + key);
+                setConfirmPassword2("");
               }}
               className="w-80 h-10 bg-red-400 rounded-md mt-5"
             >
@@ -151,7 +168,17 @@ const Settings = () => {
             placeholder="Private Key"
             type="password"
           />
-          <button className="w-80 h-10 bg-green-400 rounded-md mt-5">
+          <button
+            onClick={() => {
+              const status = importWallet(privateKey);
+              if (!status) {
+                alert("Something went wrong try again");
+                return;
+              }
+              alert("Wallet imported");
+            }}
+            className="w-80 h-10 bg-green-400 rounded-md mt-5"
+          >
             Import
           </button>
         </div>
