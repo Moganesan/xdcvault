@@ -51,6 +51,17 @@ const importWallet = (privateKey: string) => {
   }
 };
 
+const getWalletFromPrivateKey = (privateKey: string) => {
+  if (!privateKey) return;
+  try {
+    const wallet = new Wallet(privateKey);
+
+    return wallet;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const addNewWallet = async (walletName: string, password: string) => {
   if (!password) return;
   try {
@@ -86,6 +97,8 @@ const setWalletPassword = (password: string) => {
     password,
     privateKey
   );
+
+  console.log("Wallet Address", address, privateKey);
 
   localStorage.setItem(
     "wallet_" + countWallets() + 1,
@@ -328,4 +341,5 @@ export {
   decryptPrivateKey,
   decryptPassword,
   importWallet,
+  getWalletFromPrivateKey,
 };
