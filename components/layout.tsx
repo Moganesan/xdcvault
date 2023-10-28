@@ -4,10 +4,16 @@ import { useWalletsContext } from "@/context/walletsContext";
 import { useRouter } from "next/router";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/24/solid";
+import { addNewWallet, decryptPrivateKey } from "@/helpers/wallet";
 import { Wallet } from "ethers";
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const { state, auth } = useWalletsContext();
+
+  const [showInput, setShowInput] = useState(false);
+  const [showInput2, setShowInput2] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword2, setConfirmPassword2] = useState("");
 
   const [selectedWallet, setSelectedWallet] = useState<any | undefined>();
 
@@ -27,8 +33,17 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           <Listbox value={selectedWallet} onChange={setSelectedWallet}>
             <div className="relative mt-1">
               <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                <span className="block truncate">
-                  {selectedWallet?.address}
+                <span className="block truncate text-black text-md">
+                  {selectedWallet?.address.slice(
+                    0,
+                    selectedWallet.address.length -
+                      (selectedWallet.address.length - 10)
+                  )}
+                  ...
+                  {selectedWallet?.address.slice(
+                    selectedWallet.address.length - 10,
+                    selectedWallet.address.length
+                  )}
                 </span>
                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                   <ChevronUpDownIcon
