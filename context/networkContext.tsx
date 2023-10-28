@@ -20,7 +20,7 @@ const NetworkContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     const provider: ethers.providers.JsonRpcProvider =
-      new ethers.providers.JsonRpcProvider("https://rpc.apothem.network");
+      new ethers.providers.JsonRpcProvider("https://erpc.apothem.network");
 
     provider.getNetwork().then((network) => {
       console.log("Chain Id", network.chainId);
