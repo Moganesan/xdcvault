@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import crypto from "crypto";
-import { ethers } from "ethers";
+import { ethers, Wallet } from "ethers";
 
 const provider = new ethers.providers.JsonRpcProvider(
   "https://rpc.apothem.network"
@@ -12,7 +12,74 @@ const createNewWallet = () => {
   return { address: wallet.address, privateKey: wallet.privateKey };
 };
 
+const importWallet = (privateKey: string) => {
+  if (!privateKey) return;
+  try {
+    const wallet = new Wallet(privateKey);
+    const prevWallets = getWallets();
+    const check = prevWallets.find(
+      (Wallet) =>
+        Wallet.address.toLowerCase() ==
+        wallet.address.toLowerCase().replace("0x", "xdc")
+    );
+
+    if (check) {
+      alert("Wallet address already exist");
+      return;
+    }
+    const { encryptedPrivateKey, iv, salt, tag } = encryptPrivateKey(
+      privateKey,
+      privateKey
+    );
+
+    localStorage.setItem(
+      "wallet_" + countWallets() + 1,
+      JSON.stringify({
+        name: "wallet " + countWallets() + 1,
+        address: wallet.address.replace("0x", "xdc").toLowerCase(),
+        privateKey: encryptedPrivateKey,
+        iv,
+        salt,
+        tag,
+      })
+    );
+
+    return true;
+  } catch (err) {
+    console.error("Encryption error:", err);
+    return false;
+  }
+};
+
+const addNewWallet = async (walletName: string, password: string) => {
+  if (!password) return;
+  try {
+    const { address, privateKey } = createNewWallet();
+    const { encryptedPrivateKey, iv, salt, tag } = encryptPrivateKey(
+      password,
+      privateKey
+    );
+
+    localStorage.setItem(
+      "wallet_" + countWallets() + 1,
+      JSON.stringify({
+        name: walletName ? walletName : "wallet " + countWallets() + 1,
+        address: address.replace("0x", "xdc").toLowerCase(),
+        privateKey: encryptedPrivateKey,
+        iv,
+        salt,
+        tag,
+      })
+    );
+    return true;
+  } catch (err) {
+    console.error("Encryption error:", err);
+    return false;
+  }
+};
+
 const setWalletPassword = (password: string) => {
+  if (!password) return;
   encryptAndStorePassword(password);
   const { address, privateKey } = createNewWallet();
   const { encryptedPrivateKey, iv, salt, tag } = encryptPrivateKey(
@@ -143,7 +210,7 @@ async function decryptPassword(userEnteredPassword: string) {
 
     // Convert the decrypted password to a string
     const decoder = new TextDecoder();
-    const decryptedPassword = decoder.decode(decryptedPasswordBuffer);
+    const decryptedPassword: string = decoder.decode(decryptedPasswordBuffer);
 
     console.log("Decrypted password:", decryptedPassword);
     return decryptedPassword;
@@ -188,30 +255,39 @@ function decryptPrivateKey(
   storedIV: any,
   storedTag: any
 ) {
-  // Derive the encryption key from the user's password and the stored salt
-  const key = crypto.pbkdf2Sync(
-    password,
-    Buffer.from(storedSalt, "hex"),
-    100000,
-    32,
-    "sha512"
-  );
+  try {
+    // Derive the encryption key from the user's password and the stored salt
+    const key = crypto.pbkdf2Sync(
+      password,
+      Buffer.from(storedSalt, "hex"),
+      100000,
+      32,
+      "sha512"
+    );
 
-  // Create a decipher using AES-GCM
-  const decipher = crypto.createDecipheriv(
-    "aes-256-gcm",
-    key,
-    Buffer.from(storedIV, "hex")
-  );
+    // Create a decipher using AES-GCM
+    const decipher = crypto.createDecipheriv(
+      "aes-256-gcm",
+      key,
+      Buffer.from(storedIV, "hex")
+    );
 
-  // Set the authentication tag
-  decipher.setAuthTag(Buffer.from(storedTag, "hex"));
+    // Set the authentication tag
+    decipher.setAuthTag(Buffer.from(storedTag, "hex"));
 
-  // Decrypt the stored encrypted private key
-  let decryptedPrivateKey = decipher.update(encryptedPrivateKey, "hex", "utf8");
-  decryptedPrivateKey += decipher.final("utf8");
+    // Decrypt the stored encrypted private key
+    let decryptedPrivateKey = decipher.update(
+      encryptedPrivateKey,
+      "hex",
+      "utf8"
+    );
+    decryptedPrivateKey += decipher.final("utf8");
 
-  return decryptedPrivateKey;
+    return decryptedPrivateKey;
+  } catch (err) {
+    return false;
+    throw new Error("Invalid password");
+  }
 }
 
 const getWallets = () => {
@@ -227,6 +303,8 @@ const getWallets = () => {
       }
     }
   }
+
+  console.log("All Wallets", wallets);
   return wallets;
 };
 
@@ -242,4 +320,12 @@ function countWallets() {
   return walletCount;
 }
 
-export { createNewWallet, getWallets, setWalletPassword };
+export {
+  createNewWallet,
+  getWallets,
+  setWalletPassword,
+  addNewWallet,
+  decryptPrivateKey,
+  decryptPassword,
+  importWallet,
+};
