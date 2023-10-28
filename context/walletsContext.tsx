@@ -6,7 +6,7 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { getWallets } from "@/helpers/wallet";
+import { getBalance, getWallets } from "@/helpers/wallet";
 
 export type Props = {
   state: Wallet[] | null;
@@ -18,6 +18,7 @@ export type Props = {
 
 export type Wallet = {
   name: string;
+  balance: number;
   address: string;
   privateKey: string;
   iv: any;
@@ -36,6 +37,7 @@ const WalletsContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<Wallet[] | null>(null);
   const [auth, setAuth] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
+  const [balance, setBalance] = useState("");
 
   const updateState = (newWallet: Wallet) => {
     if (!newWallet) return;
@@ -44,9 +46,21 @@ const WalletsContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const updateSelectedWallet = (wallet: Wallet) => {
     if (!wallet) return;
+    const updateWallet = wallet;
+    updateWallet.balance = Number(balance);
     setSelectedWallet(wallet);
   };
 
+  const GetBalance = async () => {
+    if (selectedWallet != null) {
+      const balance = await getBalance(selectedWallet?.address);
+      setBalance(balance);
+    }
+  };
+
+  useEffect(() => {
+    GetBalance();
+  }, [selectedWallet]);
   useEffect(() => {
     const fetchDataFromLocalStorage = () => {
       const wallets: Wallet[] = getWallets();
@@ -55,7 +69,6 @@ const WalletsContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setState(wallets);
       }
     };
-
     fetchDataFromLocalStorage();
   }, []);
 
