@@ -3,6 +3,7 @@ import { useWalletsContext } from "@/context/walletsContext";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState, Fragment } from "react";
+import { decryptPrivateKey } from "@/helpers/wallet";
 
 const Settings = () => {
   const { state, auth } = useWalletsContext();
@@ -119,7 +120,24 @@ const Settings = () => {
               onChange={(e) => setConfirmPassword2(e.target.value)}
               placeholder="Password"
             />
-            <button className="w-80 h-10 bg-red-400 rounded-md mt-5">
+            <button
+              onClick={() => {
+                const key = decryptPrivateKey(
+                  confirmPassword2,
+                  selectedWallet.privateKey,
+                  selectedWallet.salt,
+                  selectedWallet.iv,
+                  selectedWallet.tag
+                );
+                if (!key) {
+                  alert("Invalid Password");
+                  return;
+                }
+
+                alert("Key :" + key);
+              }}
+              className="w-80 h-10 bg-red-400 rounded-md mt-5"
+            >
               Export
             </button>
           </div>
