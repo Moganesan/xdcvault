@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { ethers, Wallet } from "ethers";
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.apothem.network"
+  "https://erpc.apothem.network "
 );
 
 const createNewWallet = () => {
