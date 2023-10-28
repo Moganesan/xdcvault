@@ -21,7 +21,7 @@ type MenuItem = {
 
 const menuItems = [
   { id: 1, label: "Dashboard", icon: HomeIcon, link: "/" },
-  { id: 2, label: "Sell", icon: MinusCircleIcon, link: "/sent" },
+  { id: 2, label: "Sent", icon: MinusCircleIcon, link: "/sent" },
   { id: 3, label: "Receive", icon: PlusCircleIcon, link: "/receive" },
   { id: 4, label: "Swap", icon: ArrowPathRoundedSquareIcon, link: "/swap" },
   { id: 5, label: "Settings", icon: Cog6ToothIcon, link: "/settings" },
