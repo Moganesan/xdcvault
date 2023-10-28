@@ -5,17 +5,15 @@ import { useRouter } from "next/router";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/24/solid";
 import { addNewWallet, decryptPrivateKey } from "@/helpers/wallet";
+
 import { Wallet } from "ethers";
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const { state, auth } = useWalletsContext();
 
-  const [showInput, setShowInput] = useState(false);
-  const [showInput2, setShowInput2] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [confirmPassword2, setConfirmPassword2] = useState("");
-
   const [selectedWallet, setSelectedWallet] = useState<any | undefined>();
+
+  const { updateSelectedWallet } = useWalletsContext();
 
   const router = useRouter();
   useEffect(() => {
@@ -25,6 +23,9 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [state, auth]);
 
+  useEffect(() => {
+    updateSelectedWallet(selectedWallet);
+  }, [selectedWallet]);
   return (
     <div className="h-screen flex flex-row justify-start">
       <Sidebar />
@@ -58,7 +59,10 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                <Listbox.Options
+                  onChange={(e) => console.log(e)}
+                  className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
+                >
                   {state?.map((wallet: any, walletIdx: any) => (
                     <Listbox.Option
                       key={walletIdx}
