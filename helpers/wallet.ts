@@ -12,6 +12,51 @@ const createNewWallet = () => {
   return { address: wallet.address, privateKey: wallet.privateKey };
 };
 
+const getBalance = async (address: string) => {
+  const balance = await provider.getBalance(address.replace("xdc", "0x"));
+
+  return ethers.utils.formatUnits(balance.toString());
+};
+
+const sendTXDC = async (
+  password: string,
+  amount: string,
+  receiver: string,
+  wallet: any
+) => {
+  console.log("Pass", password);
+  console.log("Wallet", wallet);
+  console.log(ethers.utils.formatEther(amount));
+  const decryptedPrivate = await decryptPrivateKey(
+    password,
+    wallet.privateKey,
+    wallet.salt,
+    wallet.iv,
+    wallet.tag
+  );
+
+  console.log(decryptedPrivate);
+
+  const senderWallet = new Wallet(decryptedPrivate.toString(), provider);
+
+  const amountXDC = ethers.utils.parseEther(amount.toString());
+
+  // create a transaction
+  const tx = {
+    to: receiver,
+    value: amountXDC,
+    gasLimit: 21000,
+  };
+
+  try {
+    const sendTx = await senderWallet.sendTransaction(tx);
+    const response = await sendTx.wait();
+    return response;
+  } catch (err) {
+    return false;
+  }
+};
+
 const importWallet = (privateKey: string) => {
   if (!privateKey) return;
   try {
@@ -340,6 +385,8 @@ export {
   addNewWallet,
   decryptPrivateKey,
   decryptPassword,
+  getBalance,
   importWallet,
+  sendTXDC,
   getWalletFromPrivateKey,
 };
