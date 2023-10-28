@@ -24,7 +24,7 @@ const setWalletPassword = (password: string) => {
     "wallet_" + countWallets() + 1,
     JSON.stringify({
       name: "wallet " + countWallets() + 1,
-      address: address,
+      address: address.replace("0x", "xdc"),
       privateKey: encryptedPrivateKey,
       iv,
       salt,
