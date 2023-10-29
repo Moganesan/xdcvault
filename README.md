@@ -1,5 +1,6 @@
 # XDCVault - A Secure Crypto Wallet
 
+<img src="">
 ## Problem Statement
 
 Crypto wallet users face significant challenges in securing their digital assets. The need for a decentralized and secure solution is paramount. Traditional wallets rely on client or server-side storage, which can be vulnerable to attacks.
@@ -31,7 +32,7 @@ XDCVault is built using modern and robust technologies:
 
 ## Challenges Faced
 
-While developing the DApp, we faced certain challenges. We had initially planned to integrate a decentralized exchange (DEX) contract with XDCVault. However, we encountered issues during the deployment of the contract on the XDC network.
+finding documentations.
 
 ## Links:
 
