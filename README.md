@@ -25,10 +25,15 @@ XDCVault is built using modern and robust technologies:
 4. Ethers.js
 5. TypeScript
 
+## Links
+
+1.
+
 ## Challenges Faced
 
 While developing the DApp, we faced certain challenges. We had initially planned to integrate a decentralized exchange (DEX) contract with XDCVault. However, we encountered issues during the deployment of the contract on the XDC network.
 
-## Conclusion
+## Links:
 
-XDCVault is the future of secure crypto wallets. It offers cutting-edge security measures, user-friendly functionalities, and innovative features like face recognition. By addressing the challenges faced during development, we aim to provide a secure and reliable wallet for the crypto community.
+1. <a href="https://github.com/Moganesan/xdcvault">https://github.com/Moganesan/xdcvault</a>
+2. <a href="https://xdcvault.vercel.app">https://xdcvault.vercel.app</a>

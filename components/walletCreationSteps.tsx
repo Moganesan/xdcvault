@@ -138,7 +138,7 @@ function WalletCreationStepper() {
             <h2 className="font-bold text-xl">Create a password.</h2>
             <p className="font-light mt-2">
               This password will unlock your XDCVault wallet only on this
-              device. we can't recover this password.
+              device. we can&lsquo;t recover this password.
             </p>
             <div className="mt-10">
               <input

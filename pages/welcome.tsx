@@ -30,7 +30,7 @@ const Welcome = () => {
       >
         {isShowing ? (
           <div className="text-center px-10 flex flex-col items-center">
-            <h1 className="text-4xl">Let's get started🚀</h1>
+            <h1 className="text-4xl">Let&lsquo;s get started🚀</h1>
             <h2 className="mt-4">
               Unlock the Future: Your XDC Wallet, where Security Meets
               Innovation.
