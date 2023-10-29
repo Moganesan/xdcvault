@@ -10,8 +10,10 @@ import {
   ArrowPathRoundedSquareIcon,
   Bars2Icon,
   Cog6ToothIcon,
+  ArrowTrendingUpIcon,
   ChevronDoubleLeftIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 type MenuItem = {
   id: number;
   label: string;
@@ -23,7 +25,6 @@ const menuItems = [
   { id: 1, label: "Dashboard", icon: HomeIcon, link: "/" },
   { id: 2, label: "Sent", icon: MinusCircleIcon, link: "/sent" },
   { id: 3, label: "Receive", icon: PlusCircleIcon, link: "/receive" },
-  { id: 4, label: "Swap", icon: ArrowPathRoundedSquareIcon, link: "/swap" },
   { id: 5, label: "Settings", icon: Cog6ToothIcon, link: "/settings" },
 ];
 
@@ -80,10 +81,8 @@ const Sidebar = () => {
       <div className="flex flex-col">
         <div className="flex items-center justify-between relative">
           <div className="flex items-center pl-1 gap-4">
-            <div className="flex items-center">
-              <div>
-                <h1>XDC</h1>
-              </div>
+            <div className="flex items-center justify-center">
+              <Image src={"/logo.png"} width={100} height={100} alt="logo" />
             </div>
           </div>
           {isCollapsible && (

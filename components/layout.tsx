@@ -33,7 +33,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
         <div className="w-full flex items-center justify-end ">
           <Listbox value={selectedWallet} onChange={setSelectedWallet}>
             <div className="relative mt-1">
-              <Listbox.Button className="relative w-full  cursor-default border-2 rounded-lg bg-red-200 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none sm:text-sm">
+              <Listbox.Button className="relative w-full  cursor-default border-2 rounded-lg bg-white text-black py-2 pl-3 pr-10 text-left shadow-md focus:outline-none sm:text-sm">
                 <span className="block truncate text-white text-md">
                   {selectedWallet?.address.slice(
                     0,
