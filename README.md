@@ -1,6 +1,5 @@
 # XDCVault - A Secure Crypto Wallet
 
-<img src="">
 ## Problem Statement
 
 Crypto wallet users face significant challenges in securing their digital assets. The need for a decentralized and secure solution is paramount. Traditional wallets rely on client or server-side storage, which can be vulnerable to attacks.
