@@ -25,10 +25,6 @@ XDCVault is built using modern and robust technologies:
 4. Ethers.js
 5. TypeScript
 
-## Links
-
-1.
-
 ## Challenges Faced
 
 finding documentations.
