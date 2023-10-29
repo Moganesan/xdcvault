@@ -1,40 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# XDCVault - A Secure Crypto Wallet
 
-## Getting Started
+## Problem Statement
 
-First, run the development server:
+Crypto wallet users face significant challenges in securing their digital assets. The need for a decentralized and secure solution is paramount. Traditional wallets rely on client or server-side storage, which can be vulnerable to attacks.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Solution
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**XDCVault** is the answer to these problems. It's a highly secure and cryptographically encrypted wallet that does not rely on client or server-side storage systems. XDCVault ensures the utmost security for user private keys and passwords. With XDCVault, users can securely send and receive crypto payments on the XDC network.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Key Features:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- **Security**: XDCVault employs advanced encryption algorithms, including PBKDF2, AES-GCM, and SHA-256, to protect user passwords and wallet private keys.
+- **Multiple Wallets**: XDCVault supports multiple wallets, making it versatile for users with various crypto assets.
+- **User-Friendly**: It offers functions like importing existing wallets, creating new wallets, and exporting wallet private keys securely.
+- **Face Recognition**: A standout feature is the use of face recognition for user wallet creation, enhancing KYC.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+XDCVault is built using modern and robust technologies:
 
-## Learn More
+1. Next.js
+2. Headless UI
+3. Tailwind CSS
+4. Ethers.js
+5. TypeScript
 
-To learn more about Next.js, take a look at the following resources:
+## Challenges Faced
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+While developing the DApp, we faced certain challenges. We had initially planned to integrate a decentralized exchange (DEX) contract with XDCVault. However, we encountered issues during the deployment of the contract on the XDC network.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Conclusion
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+XDCVault is the future of secure crypto wallets. It offers cutting-edge security measures, user-friendly functionalities, and innovative features like face recognition. By addressing the challenges faced during development, we aim to provide a secure and reliable wallet for the crypto community.
